@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&display=swap');
+
+.body-text {
+  margin: 0;
+  padding: 0;
+  font-family: 'Outfit', sans-serif;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+.extra-login-wrapper {
+  width: 90%;
+  max-width: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.extra-container {
+  display: flex;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+  width: 100%;
+  min-height: 500px;
+  backdrop-filter: blur(15px);
+}
+.extra-right {
+  flex: 1;
+  padding: 30px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;
+ 
+}
+
+.glass {
+  backdrop-filter: blur(10px);
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.extra-right h3 {
+  font-size: 26px;
+  color: #6c63ff;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.extra-right form input {
+  /* width: 100%; */
+  padding: 14px;
+  margin-bottom: 18px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  outline: none;
+  transition: 0.3s ease;
+}
+
+.extra-right form input:focus {
+  border-color: #ea2f2f;
+  box-shadow: 0 0 5px rgba(129, 41, 144, 0.5);
+}
+
+.extra-login-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #de3030e2;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 40px;
+}
+.right-header{
+  justify-items: center;
+  align-items: center;
+}
+.extra-login-btn:hover {
+  background-color: #f0301bf6;
+}
+.logo{
+	font-size: 50px;
+	text-align: center;
+  justify-content: center;
+}
+
+.forgot-link {
+  display: inline-block;
+  margin: 10px 0;
+  color: #0c1420;
+  text-decoration: none;
+  font-size: 0.9rem;
+  margin-right: 15px;
+}
+.forgot-link:hover {
+   color: #f33628;
+}
+
+@media (max-width: 768px) {
+  .extra-container {
+    flex-direction: column;
+    min-height: auto;
+    margin: 20px;
+  }
+
+  .extra-left, .extra-right {
+    padding: 30px;
+    border-radius: 0;
+  }
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}

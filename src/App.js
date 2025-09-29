@@ -1,24 +1,24 @@
 import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Login from './Components/Login_File/Login';
+import { ToastContainer } from 'react-toastify';
+import AccessCodeModal from './Components/Login_File/AccessCode';
+import Loader from './Components/Loader_File/Loader';
+import VendorTable from './Components/Vendor-File/Vendor';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+        <BrowserRouter>
+       <Routes>
+        <Route path='/' element={<Login/>} />
+         <Route path='/access' element={<AccessCodeModal />} />
+          <Route path='/loader' element={<Loader/>} />
+          <Route path='/vendor' element={<VendorTable/>}/>
+       </Routes>
+       <ToastContainer position="top-right" autoClose={3000}  theme="colored"  hideProgressBar={false}/>
+        </BrowserRouter>
   );
 }
 
