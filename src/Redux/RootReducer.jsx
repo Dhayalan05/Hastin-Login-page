@@ -1,12 +1,12 @@
 
 import { combineReducers } from '@reduxjs/toolkit';
-import userReducer from './Reducer_Flie/UserReduce';
-import vendorReducer from './Reducer_Flie/VendorReducer';
+import userReducer from './Reducer_Flie/UserReducer';
+import VendorReducer from './Reducer_Flie/VendorReducer';
 
 
 const rootReducer = combineReducers({
   user: userReducer,
-  vendor:vendorReducer,
+  vendor: VendorReducer
 
 });
 

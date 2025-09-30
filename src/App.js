@@ -5,7 +5,7 @@ import Login from './Components/Login_File/Login';
 import { ToastContainer } from 'react-toastify';
 import AccessCodeModal from './Components/Login_File/AccessCode';
 import Loader from './Components/Loader_File/Loader';
-import VendorTable from './Components/Vendor-File/Vendor';
+import VendorDashboard from './Components/Vendor_File/VendorTable';
 
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
         <Route path='/' element={<Login/>} />
          <Route path='/access' element={<AccessCodeModal />} />
           <Route path='/loader' element={<Loader/>} />
-          <Route path='/vendor' element={<VendorTable/>}/>
+           <Route path='/Vendor' element={<VendorDashboard/>}/>
        </Routes>
        <ToastContainer position="top-right" autoClose={3000}  theme="colored"  hideProgressBar={false}/>
         </BrowserRouter>

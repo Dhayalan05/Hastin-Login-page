@@ -4,7 +4,8 @@ import {
   POST_LOGIN_REQUEST,
   ACCESS_CODE_REQUEST,
   RESEND_OTP_REQUEST,
-  
+  // GET_USER_DETAILS_REQUEST,
+
 } from '../Type_File/Type';
 import {
   postloginSuccess,
@@ -13,7 +14,9 @@ import {
   accesscodeFailure,
   resendOtpSuccess,
   resendOtpFailure,
-
+  // getUserDetailsFailure,
+  // getUserDetailsSuccess,
+  // getUserDetailsRequest
  
 } from '../Action_File/Action';
 import { toast } from 'react-toastify';
@@ -115,7 +118,7 @@ function* userSaga() {
   yield takeLatest(POST_LOGIN_REQUEST, handleLogin);
   yield takeLatest(ACCESS_CODE_REQUEST, handleAccessCode);
   yield takeLatest(RESEND_OTP_REQUEST, handleResendOtp);
-//   yield takeLatest(GET_USER_DETAILS_REQUEST, handleGetUserDetails);
+  // yield takeLatest(GET_USER_DETAILS_REQUEST, handleGetUserDetails);
 }
 
 export default userSaga;

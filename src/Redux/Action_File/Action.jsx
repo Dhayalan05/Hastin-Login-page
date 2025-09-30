@@ -9,7 +9,11 @@ import {
   RESEND_OTP_SUCCESS,
   RESEND_OTP_FAILURE,
   CLEAR_ACCESSCODE_STATUS,
- 
+  // GET_USER_DETAILS_REQUEST,
+  // GET_USER_DETAILS_SUCCESS,
+  // GET_USER_DETAILS_FAILURE,
+
+
 } from '../Type_File/Type';
 
 
@@ -66,4 +70,16 @@ export const resendOtpFailure = (error) => ({
   payload: error,
 });
 
+// export const getUserDetailsRequest = () => ({
+//   type: GET_USER_DETAILS_REQUEST,
+// });
 
+// export const getUserDetailsSuccess = (data) => ({
+//   type: GET_USER_DETAILS_SUCCESS,
+//   payload: data,
+// });
+
+// export const getUserDetailsFailure = (error) => ({
+//   type: GET_USER_DETAILS_FAILURE,
+//   payload: error,
+// });
