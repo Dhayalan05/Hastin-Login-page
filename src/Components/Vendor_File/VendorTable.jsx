@@ -1,104 +1,424 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { Dropdown } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCircle, faEdit, faCircle } from "@fortawesome/free-solid-svg-icons";
+// import React, { useEffect, useState } from "react";
+// import { useDispatch, useSelector } from "react-redux";
+// import { useNavigate } from "react-router-dom";
+// import { Dropdown } from "react-bootstrap";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faUserCircle, faEdit, faCircle } from "@fortawesome/free-solid-svg-icons";
 
+// import {
+//   fetchVendorsRequest,
+//   updateVendorRequest,
+//   deleteVendorRequest,
+// } from "../../Redux/Action_File/VendorAction";
+// import "./VendorTable.css"
+
+// const ROWS_PER_PAGE = 5;
+
+// const VendorDashboard = () => {
+//   const dispatch = useDispatch();
+//   const navigate = useNavigate();
+
+//   const { vendors, loading } = useSelector((state) => state.vendor);
+
+//   // 🔹 Local states
+//   const [activeTab, setActiveTab] = useState("ACTIVE");
+//   const [searchTerm, setSearchTerm] = useState("");
+//   const [currentPage, setCurrentPage] = useState(1);
+//   const [actionMenu, setActionMenu] = useState(null);
+//   const [confirmModal, setConfirmModal] = useState(false);
+//   const [confirmAction, setConfirmAction] = useState(null);
+//   const [selectedVendorId, setSelectedVendorId] = useState(null);
+
+//   // 🔹 Load vendors from API
+//   useEffect(() => {
+//     dispatch(fetchVendorsRequest());
+//   }, [dispatch]);
+
+//   // 🔹 Filter vendors by tab & search
+//   const filteredVendors = vendors.filter(
+//     (vendor) =>
+//       vendor.status === activeTab &&
+//       vendor.vendorName.toLowerCase().includes(searchTerm.toLowerCase())
+//   );
+
+//   // 🔹 Pagination
+//   const totalPages = Math.ceil(filteredVendors.length / ROWS_PER_PAGE);
+//   const paginatedVendors = filteredVendors.slice(
+//     (currentPage - 1) * ROWS_PER_PAGE,
+//     currentPage * ROWS_PER_PAGE
+//   );
+
+//   // 🔹 Logout
+//   const handleLogout = () => {
+//     localStorage.clear();
+//     navigate("/");
+//   };
+
+//   // 🔹 Confirm action (status toggle or delete)
+//   const handleConfirmAction = () => {
+//     if (selectedVendorId) {
+//       if (confirmAction === "DELETE") {
+//         dispatch(deleteVendorRequest(selectedVendorId));
+//       } else {
+//         dispatch(
+//           updateVendorRequest({
+//             id: selectedVendorId,
+//             status: confirmAction,
+//           })
+//         );
+//       }
+//       setConfirmModal(false);
+//     }
+//   };
+
+//   return (
+//     <div className="vendor-container">
+//       {/* 🔹 Topbar */}
+//       <div className="topbar-wrapper">
+//         <h2>HASTIN</h2>
+//         <Dropdown align="end">
+//           <Dropdown.Toggle
+//             variant="white"
+//             className="icon-toggle"
+//             title="Logout"
+//           >
+//             <FontAwesomeIcon icon={faUserCircle} size="lg" />
+//           </Dropdown.Toggle>
+//           <Dropdown.Menu>
+//             <Dropdown.Item onClick={handleLogout} className="logout-btn">
+//               Logout
+//             </Dropdown.Item>
+//           </Dropdown.Menu>
+//         </Dropdown>
+//       </div>
+
+//       {/* 🔹 Header Tabs */}
+//       <div className="vendor-header">
+//         <div className="tabs">
+//           {["ACTIVE", "INACTIVE"].map((tab) => (
+//             <button
+//               key={tab}
+//               className={`tab ${activeTab === tab ? "active" : ""}`}
+//               onClick={() => {
+//                 setActiveTab(tab);
+//                 setCurrentPage(1);
+//               }}
+//             >
+//               {tab}
+//             </button>
+//           ))}
+//         </div>
+
+//         <button
+//           onClick={() => navigate("/vendorcreate")}
+//           className="btn-new"
+//         >
+//           + New Vendor
+//         </button>
+//       </div>
+
+//       {/* 🔹 Toolbar */}
+//       <div className="vendor-toolbar">
+//         <input
+//           type="text"
+//           id="vendor-search"
+//           name="search"
+//           placeholder="Search"
+//           className="search-input"
+//           value={searchTerm}
+//           onChange={(e) => setSearchTerm(e.target.value)}
+//         />
+//       </div>
+
+//       {/* 🔹 Vendor Table */}
+//       <div className="table-scroll">
+//         {loading ? (
+//           <div className="status-msg">Loading...</div>
+//         ) : (
+//           <table className="vendor-table">
+//             <thead>
+//               <tr>
+//                 <th>S.NO</th>
+//                 <th>NAME</th>
+//                 <th>VENDOR CODE</th>
+//                 <th>TYPE</th>
+//                 <th>ADDRESS</th>
+//                 <th>COUNTRY</th>
+//                 <th>STATUS</th>
+//                 <th>ACTION</th>
+//               </tr>
+//             </thead>
+//             <tbody>
+//               {filteredVendors.length === 0 ? (
+//                 <tr>
+//                   <td colSpan="8" className="no-data">
+//                     No vendors found.
+//                   </td>
+//                 </tr>
+//               ) : (
+//                 paginatedVendors.map((vendor, index) => (
+//                   <tr key={vendor.id}>
+//                     <td>{(currentPage - 1) * ROWS_PER_PAGE + index + 1}</td>
+//                     <td>{vendor.vendorName}</td>
+//                     <td>{vendor.vendorCode}</td>
+//                     <td>{vendor.vendorType}</td>
+//                     <td
+//                       title={vendor.dispAddress}
+//                       style={{
+//                         maxWidth: "200px",
+//                         whiteSpace: "nowrap",
+//                         overflow: "hidden",
+//                         textOverflow: "ellipsis",
+//                       }}
+//                     >
+//                       {vendor.dispAddress}
+//                     </td>
+//                     <td>{vendor.country}</td>
+//                     <td>
+//                       <span
+//                         className={`badge badge-${vendor.status?.toLowerCase()}`}
+//                       >
+//                         {vendor.status}
+//                       </span>
+//                     </td>
+//                     <td style={{ position: "relative" }}>
+//                       <button
+//                         className="btn-action"
+//                         title="Edit & Action"
+//                         onClick={() =>
+//                           setActionMenu(
+//                             actionMenu === vendor.id ? null : vendor.id
+//                           )
+//                         }
+//                       >
+//                         &#8942;
+//                       </button>
+
+//                       {actionMenu === vendor.id && (
+//                         <div className="action-dropdown">
+//                           {/* Edit */}
+//                           <button
+//                             className="dropdown-btn edit-btn"
+//                             onClick={() => {
+//                               navigate(`/vendoredit/${vendor.id}`);
+//                               setActionMenu(null);
+//                             }}
+//                           >
+//                             <FontAwesomeIcon icon={faEdit} /> Edit
+//                           </button>
+
+//                           {/* Toggle Status */}
+//                           <button
+//                             className="dropdown-btn inactive-btn"
+//                             onClick={() => {
+//                               setSelectedVendorId(vendor.id);
+//                               setConfirmAction(
+//                                 vendor.status === "ACTIVE"
+//                                   ? "INACTIVE"
+//                                   : "ACTIVE"
+//                               );
+//                               setConfirmModal(true);
+//                               setActionMenu(null);
+//                             }}
+//                           >
+//                             <FontAwesomeIcon
+//                               icon={faCircle}
+//                               color={
+//                                 vendor.status === "ACTIVE" ? "red" : "green"
+//                               }
+//                             />
+//                             {vendor.status === "ACTIVE"
+//                               ? "Mark Inactive"
+//                               : "Mark Active"}
+//                           </button>
+
+//                           {/* Delete */}
+//                           <button
+//                             className="dropdown-btn delete-btn"
+//                             onClick={() => {
+//                               setSelectedVendorId(vendor.id);
+//                               setConfirmAction("DELETE");
+//                               setConfirmModal(true);
+//                               setActionMenu(null);
+//                             }}
+//                           >
+//                             ❌ Delete
+//                           </button>
+//                         </div>
+//                       )}
+//                     </td>
+//                   </tr>
+//                 ))
+//               )}
+//             </tbody>
+//           </table>
+//         )}
+//       </div>
+
+//       {/* 🔹 Confirm Modal */}
+//       {confirmModal && (
+//         <div className="modal-overlay">
+//           <div className="confirm-modal">
+//             <p>
+//               Are you sure you want to{" "}
+//               {confirmAction === "DELETE" ? (
+//                 <>delete this vendor?</>
+//               ) : (
+//                 <>
+//                   mark this vendor as <b>{confirmAction}</b>?
+//                 </>
+//               )}
+//             </p>
+//             <div className="modal-buttons">
+//               <button className="btn-yes" onClick={handleConfirmAction}>
+//                 Yes
+//               </button>
+//               <button
+//                 className="btn-cancel"
+//                 onClick={() => setConfirmModal(false)}
+//               >
+//                 Cancel
+//               </button>
+//             </div>
+//           </div>
+//         </div>
+//       )}
+
+//       {/* 🔹 Pagination */}
+//       <div className="pagination">
+//         <button
+//           onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+//           disabled={currentPage === 1}
+//         >
+//           &lt;
+//         </button>
+//         {[...Array(totalPages)].map((_, i) => (
+//           <button
+//             key={i + 1}
+//             className={i + 1 === currentPage ? "active" : ""}
+//             onClick={() => setCurrentPage(i + 1)}
+//           >
+//             {i + 1}
+//           </button>
+//         ))}
+//         <button
+//           onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+//           disabled={currentPage === totalPages}
+//         >
+//           &gt;
+//         </button>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default VendorDashboard;
+
+
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
-  fetchVendorsRequest,
-  updateVendorRequest,
-  deleteVendorRequest,
-} from "../../Redux/Action_File/VendorAction";
-import "./VendorTable.css"
+  vendorUpdateRequest,
+  fetchInactiveVendorsRequest,
+  markInactiveRequest,
+  markActiveRequest
+} from '../../Redux/Action_File/VendorAction';
+import { useNavigate } from 'react-router-dom';
+import { Dropdown } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserCircle, faEdit, faCircle } from '@fortawesome/free-solid-svg-icons';
+import { toast } from 'react-toastify';
+import './VendorTable.css';
 
-const ROWS_PER_PAGE = 5;
+const ROWS_PER_PAGE = 15;
 
 const VendorDashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { vendors, loading } = useSelector((state) => state.vendor);
-
-  // 🔹 Local states
-  const [activeTab, setActiveTab] = useState("ACTIVE");
-  const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [actionMenu, setActionMenu] = useState(null);
-  const [confirmModal, setConfirmModal] = useState(false);
-  const [confirmAction, setConfirmAction] = useState(null);
-  const [selectedVendorId, setSelectedVendorId] = useState(null);
-
-  // 🔹 Load vendors from API
-  useEffect(() => {
-    dispatch(fetchVendorsRequest());
-  }, [dispatch]);
-
-  // 🔹 Filter vendors by tab & search
-  const filteredVendors = vendors.filter(
-    (vendor) =>
-      vendor.status === activeTab &&
-      vendor.vendorName.toLowerCase().includes(searchTerm.toLowerCase())
+  const { vendors = [], inactiveVendors = [], loading, } = useSelector(
+    state => state.vendor || {}
   );
 
-  // 🔹 Pagination
+  const [searchTerm, setSearchTerm] = useState('');
+  const [activeTab, setActiveTab] = useState('ACTIVE');
+  const [actionMenu, setActionMenu] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [confirmModal, setConfirmModal] = useState(false);
+  const [selectedVendorId, setSelectedVendorId] = useState(null);
+  const [confirmAction, setConfirmAction] = useState(null);
+
+  useEffect(() => {
+    if (activeTab === 'ACTIVE') {
+      dispatch(vendorUpdateRequest());
+    } else {
+      dispatch(fetchInactiveVendorsRequest());
+    }
+  }, [activeTab, dispatch]);
+
+  const dataToDisplay = Array.isArray(activeTab === 'ACTIVE' ? vendors : inactiveVendors)
+    ? (activeTab === 'ACTIVE' ? vendors : inactiveVendors)
+    : [];
+
+  const filteredVendors = dataToDisplay.filter(v =>
+    v.vendorName?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   const totalPages = Math.ceil(filteredVendors.length / ROWS_PER_PAGE);
   const paginatedVendors = filteredVendors.slice(
     (currentPage - 1) * ROWS_PER_PAGE,
     currentPage * ROWS_PER_PAGE
   );
 
-  // 🔹 Logout
-  const handleLogout = () => {
-    localStorage.clear();
-    navigate("/");
+  const handleConfirmAction = () => {
+    if (!selectedVendorId) return;
+    if (confirmAction === 'INACTIVE') {
+      dispatch(markInactiveRequest(selectedVendorId));
+      toast.success("Vendor marked as Inactive");
+    } else {
+      dispatch(markActiveRequest(selectedVendorId));
+      toast.success("Vendor marked as Active");
+    }
+    setConfirmModal(false);
   };
 
-  // 🔹 Confirm action (status toggle or delete)
-  const handleConfirmAction = () => {
-    if (selectedVendorId) {
-      if (confirmAction === "DELETE") {
-        dispatch(deleteVendorRequest(selectedVendorId));
-      } else {
-        dispatch(
-          updateVendorRequest({
-            id: selectedVendorId,
-            status: confirmAction,
-          })
-        );
-      }
-      setConfirmModal(false);
-    }
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate('/');
   };
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (!e.target.closest('.btn-action') && !e.target.closest('.action-dropdown')) {
+        setActionMenu(null);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   return (
     <div className="vendor-container">
-      {/* 🔹 Topbar */}
+      
       <div className="topbar-wrapper">
         <h2>HASTIN</h2>
         <Dropdown align="end">
-          <Dropdown.Toggle
-            variant="white"
-            className="icon-toggle"
-            title="Logout"
-          >
-            <FontAwesomeIcon icon={faUserCircle} size="lg" />
+          <Dropdown.Toggle variant="white" className="icon-toggle" title='Logout'>
+            <FontAwesomeIcon icon={faUserCircle} size="lg" title='Logout'/>
           </Dropdown.Toggle>
           <Dropdown.Menu>
-            <Dropdown.Item onClick={handleLogout} className="logout-btn">
-              Logout
-            </Dropdown.Item>
+            <Dropdown.Item onClick={handleLogout} className='logout-btn'>Logout</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </div>
 
-      {/* 🔹 Header Tabs */}
+     
       <div className="vendor-header">
         <div className="tabs">
-          {["ACTIVE", "INACTIVE"].map((tab) => (
+          {['ACTIVE', 'INACTIVE'].map(tab => (
             <button
               key={tab}
-              className={`tab ${activeTab === tab ? "active" : ""}`}
+              className={`tab ${activeTab === tab ? 'active' : ''}`}
               onClick={() => {
                 setActiveTab(tab);
                 setCurrentPage(1);
@@ -109,28 +429,26 @@ const VendorDashboard = () => {
           ))}
         </div>
 
-        <button
-          onClick={() => navigate("/vendorcreate")}
-          className="btn-new"
-        >
+        <button onClick={() => {navigate('/vendorcreate');
+        }} className="btn-new">
           + New Vendor
         </button>
       </div>
 
-      {/* 🔹 Toolbar */}
+      
       <div className="vendor-toolbar">
         <input
           type="text"
-          id="vendor-search"
-          name="search"
+          id='vendor-search'
+          name='search'
           placeholder="Search"
           className="search-input"
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={e => setSearchTerm(e.target.value)}
         />
       </div>
 
-      {/* 🔹 Vendor Table */}
+     
       <div className="table-scroll">
         {loading ? (
           <div className="status-msg">Loading...</div>
@@ -151,9 +469,7 @@ const VendorDashboard = () => {
             <tbody>
               {filteredVendors.length === 0 ? (
                 <tr>
-                  <td colSpan="8" className="no-data">
-                    No vendors found.
-                  </td>
+                  <td colSpan="8" className="no-data">No vendors found.</td>
                 </tr>
               ) : (
                 paginatedVendors.map((vendor, index) => (
@@ -162,41 +478,27 @@ const VendorDashboard = () => {
                     <td>{vendor.vendorName}</td>
                     <td>{vendor.vendorCode}</td>
                     <td>{vendor.vendorType}</td>
-                    <td
-                      title={vendor.dispAddress}
-                      style={{
-                        maxWidth: "200px",
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
+                    <td title={vendor.dispAddress} style={{ maxWidth: '200px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                       {vendor.dispAddress}
                     </td>
                     <td>{vendor.country}</td>
                     <td>
-                      <span
-                        className={`badge badge-${vendor.status?.toLowerCase()}`}
-                      >
+                      <span className={`badge badge-${vendor.status?.toLowerCase()}`}>
                         {vendor.status}
                       </span>
                     </td>
-                    <td style={{ position: "relative" }}>
+                    <td style={{ position: 'relative' }}>
                       <button
                         className="btn-action"
-                        title="Edit & Action"
-                        onClick={() =>
-                          setActionMenu(
-                            actionMenu === vendor.id ? null : vendor.id
-                          )
-                        }
+                        title='Edit & Action'
+                        onClick={() => {
+                          setActionMenu(actionMenu === vendor.id ? null : vendor.id);
+                        }}
                       >
                         &#8942;
                       </button>
-
                       {actionMenu === vendor.id && (
                         <div className="action-dropdown">
-                          {/* Edit */}
                           <button
                             className="dropdown-btn edit-btn"
                             onClick={() => {
@@ -206,43 +508,17 @@ const VendorDashboard = () => {
                           >
                             <FontAwesomeIcon icon={faEdit} /> Edit
                           </button>
-
-                          {/* Toggle Status */}
                           <button
                             className="dropdown-btn inactive-btn"
                             onClick={() => {
                               setSelectedVendorId(vendor.id);
-                              setConfirmAction(
-                                vendor.status === "ACTIVE"
-                                  ? "INACTIVE"
-                                  : "ACTIVE"
-                              );
+                              setConfirmAction(vendor.status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE');
                               setConfirmModal(true);
                               setActionMenu(null);
                             }}
                           >
-                            <FontAwesomeIcon
-                              icon={faCircle}
-                              color={
-                                vendor.status === "ACTIVE" ? "red" : "green"
-                              }
-                            />
-                            {vendor.status === "ACTIVE"
-                              ? "Mark Inactive"
-                              : "Mark Active"}
-                          </button>
-
-                          {/* Delete */}
-                          <button
-                            className="dropdown-btn delete-btn"
-                            onClick={() => {
-                              setSelectedVendorId(vendor.id);
-                              setConfirmAction("DELETE");
-                              setConfirmModal(true);
-                              setActionMenu(null);
-                            }}
-                          >
-                            ❌ Delete
+                            <FontAwesomeIcon icon={faCircle} color= {vendor.status === 'ACTIVE' ? 'red' : 'green'} />
+                            {vendor.status === 'ACTIVE' ? 'Mark Inactive' : 'Mark Active'}
                           </button>
                         </div>
                       )}
@@ -255,56 +531,34 @@ const VendorDashboard = () => {
         )}
       </div>
 
-      {/* 🔹 Confirm Modal */}
+      
       {confirmModal && (
         <div className="modal-overlay">
           <div className="confirm-modal">
-            <p>
-              Are you sure you want to{" "}
-              {confirmAction === "DELETE" ? (
-                <>delete this vendor?</>
-              ) : (
-                <>
-                  mark this vendor as <b>{confirmAction}</b>?
-                </>
-              )}
-            </p>
+            <p>Are you sure you want to mark this vendor as <b>{confirmAction}</b>?</p>
             <div className="modal-buttons">
-              <button className="btn-yes" onClick={handleConfirmAction}>
-                Yes
-              </button>
-              <button
-                className="btn-cancel"
-                onClick={() => setConfirmModal(false)}
-              >
-                Cancel
-              </button>
+              <button className="btn-yes" onClick={handleConfirmAction}>Yes</button>
+              <button className="btn-cancel" onClick={() => setConfirmModal(false)}>Cancel</button>
             </div>
           </div>
         </div>
       )}
 
-      {/* 🔹 Pagination */}
+      
       <div className="pagination">
-        <button
-          onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-          disabled={currentPage === 1}
-        >
+        <button onClick={() => setCurrentPage(p => Math.max(p - 1, 1))} disabled={currentPage === 1}>
           &lt;
         </button>
         {[...Array(totalPages)].map((_, i) => (
           <button
             key={i + 1}
-            className={i + 1 === currentPage ? "active" : ""}
+            className={i + 1 === currentPage ? 'active' : ''}
             onClick={() => setCurrentPage(i + 1)}
           >
             {i + 1}
           </button>
         ))}
-        <button
-          onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
-          disabled={currentPage === totalPages}
-        >
+        <button onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages}>
           &gt;
         </button>
       </div>
